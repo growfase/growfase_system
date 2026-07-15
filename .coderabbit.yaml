@@ -1,0 +1,26 @@
+language: "pt-PT"
+reviews:
+  profile: "balanced"
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+  auto_review:
+    enabled: true
+    drafts: false
+
+path_instructions:
+  - path: "index.html"
+    instructions: |
+      Check semantic structure, accessibility, public proposal behavior, and asset references.
+  - path: "styles.css"
+    instructions: |
+      Keep the light-blue Figma direction documented in design.md. Do not suggest green brand or decorative colors.
+  - path: "app.js"
+    instructions: |
+      Review quote calculation, URL state encoding, public preview behavior, and user-facing interactions.
+  - path: "design.md"
+    instructions: |
+      Treat this as the visual source of truth. Design implementation changes should update this file and its history.
+  - path: ".env*"
+    instructions: |
+      Flag any real secrets. Only placeholder values should be committed.

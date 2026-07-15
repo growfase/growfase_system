@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Growfase | Orçamento Cartão de Visita</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;600;700&family=Orbitron:wght@400;500;700;900&family=Oxanium:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css?v=design-system-1" />
+  </head>
+  <body>
+    <main class="workspace">
+      <div class="mobile-mode-switch" aria-label="Alternar visualização">
+        <button type="button" class="is-active" data-view="editor">
+          <i data-lucide="square-pen" aria-hidden="true"></i>
+          <span>Editor</span>
+        </button>
+        <button type="button" data-view="preview">
+          <i data-lucide="eye" aria-hidden="true"></i>
+          <span>Pré-visualização</span>
+        </button>
+      </div>
+
+      <aside class="builder" aria-label="Criador de orçamento">
+        <div class="builder__brand">
+          <span class="brand-mark">G</span>
+          <div>
+            <strong>Growfase Studio</strong>
+            <span>Gerador de orçamento</span>
+          </div>
+        </div>
+
+        <form id="quoteForm" class="form">
+          <label>
+            Cliente
+            <input name="clientName" value="Luan Campos" />
+          </label>
+
+          <label>
+            Empresa
+            <input name="companyName" value="Growfase" />
+          </label>
+
+          <label>
+            Quantidade
+            <select name="quantity">
+              <option value="250">250 unidades</option>
+              <option value="500" selected>500 unidades</option>
+              <option value="1000">1000 unidades</option>
+              <option value="2000">2000 unidades</option>
+            </select>
+          </label>
+
+          <label>
+            Acabamento
+            <select name="finish">
+              <option value="standard">Couchê 300g fosco</option>
+              <option value="premium" selected>Verniz localizado + laminação fosca</option>
+              <option value="luxury">Papel especial 600g + hot stamping</option>
+            </select>
+          </label>
+
+          <fieldset>
+            <legend>Serviços incluídos</legend>
+            <label class="check"><input type="checkbox" name="design" checked /> Design personalizado</label>
+            <label class="check"><input type="checkbox" name="print" checked /> Impressão</label>
+            <label class="check"><input type="checkbox" name="delivery" checked /> Entrega local</label>
+            <label class="check"><input type="checkbox" name="urgent" /> Prazo urgente</label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Acabamentos extras</legend>
+            <label class="check"><input type="checkbox" name="rounded" /> Cantos arredondados</label>
+            <label class="check"><input type="checkbox" name="hotStamp" /> Hot stamping dourado</label>
+            <label class="check"><input type="checkbox" name="qrCode" checked /> QR Code personalizado</label>
+            <label class="check"><input type="checkbox" name="openFile" /> Arquivo aberto editável</label>
+          </fieldset>
+
+          <label>
+            Observações
+            <textarea name="notes" rows="4">Cartão de visita para presença profissional, com visual limpo, memorável e pronto para impressão.</textarea>
+          </label>
+
+          <label>
+            Domínio da pré-visualização
+            <input name="previewBase" value="https://growfase.com/orcamento" />
+          </label>
+        </form>
+
+        <div class="preview-link-card">
+          <span>Link de pré-visualização</span>
+          <output id="previewLink">https://growfase.com/orcamento/luan-campos</output>
+        </div>
+
+        <div class="builder__total">
+          <span>Total estimado</span>
+          <strong id="builderTotal">R$ 480,00</strong>
+        </div>
+
+        <div class="builder__actions">
+          <button type="button" id="openPreview">
+            <i data-lucide="external-link" aria-hidden="true"></i>
+            <span class="button-label">Abrir link</span>
+          </button>
+          <button type="button" id="copyPreview">
+            <i data-lucide="copy" aria-hidden="true"></i>
+            <span class="button-label">Copiar link</span>
+          </button>
+          <button type="button" id="printQuote">
+            <i data-lucide="file-down" aria-hidden="true"></i>
+            <span class="button-label">Imprimir / PDF</span>
+          </button>
+          <button type="button" id="resetQuote">
+            <i data-lucide="file-plus-2" aria-hidden="true"></i>
+            <span class="button-label">Novo orçamento</span>
+          </button>
+        </div>
+      </aside>
+
+      <section class="phone-shell" aria-label="Prévia do orçamento">
+        <article class="proposal" id="proposal">
+          <header class="proposal-nav">
+            <div class="logo">
+              <span class="logo-icon">G</span>
+              <span>GROWFASE</span>
+            </div>
+            <nav>
+              <a href="#briefing">Web design</a>
+              <a href="#orcamento">UX UI</a>
+              <a href="#faq">Social Media</a>
+            </nav>
+          </header>
+
+          <section class="hero">
+            <div class="client-line">
+              <span>Cliente:</span>
+              <strong id="heroClient">Luan Campos</strong>
+            </div>
+            <p class="eyebrow">Proposta comercial</p>
+            <h1>Proposta Cartão de Visita</h1>
+            <div class="hero-card">
+              <img class="hero-asset" src="/assets/figma/470-308.png" alt="" />
+            </div>
+          </section>
+
+          <section class="content-section light briefing-card" id="briefing">
+            <span class="ghost-word">Grow</span>
+            <h2>Qual o objetivo da Growfase para o seu projeto?</h2>
+            <p>
+              Desenvolver um cartão de visita profissional para <strong id="clientIntro">Luan Campos</strong>,
+              alinhado à identidade da marca, com acabamento de alta percepção e pronto para impressão.
+            </p>
+            <p id="proposalNotes">
+              Cartão de visita para presença profissional, com visual limpo, memorável e pronto para impressão.
+            </p>
+          </section>
+
+          <section class="content-section light gallery">
+            <p class="section-tag">Referência visual</p>
+            <h2>Cartão de Visita</h2>
+            <div class="mockup-card main-mockup">
+              <img src="/assets/figma/463-210.png" alt="" />
+            </div>
+            <div class="mockup-grid">
+              <img src="/assets/figma/465-396.png" alt="" />
+              <img src="/assets/figma/466-489.png" alt="" />
+            </div>
+          </section>
+
+          <section class="content-section light deliverables">
+            <p class="section-tag">O que será entregue</p>
+            <h2>Material pronto para apresentação e impressão</h2>
+            <div class="deliverable-grid">
+              <article>
+                <span>01</span>
+                <strong>Layout frente e verso</strong>
+                <small>Arte final revisada e preparada para gráfica.</small>
+              </article>
+              <article>
+                <span>02</span>
+                <strong>Arquivo para impressão</strong>
+                <small>PDF fechado, sangria, margem e padrão de cor.</small>
+              </article>
+              <article>
+                <span>03</span>
+                <strong>Mockups de apresentação</strong>
+                <small>Prévia visual para aprovação antes da produção.</small>
+              </article>
+              <article>
+                <span>04</span>
+                <strong>Orientação de acabamento</strong>
+                <small>Recomendação de papel e acabamento final.</small>
+              </article>
+            </div>
+          </section>
+
+          <section class="profile">
+            <img class="portrait" src="/assets/figma/265-377.png" alt="" />
+            <h2 id="profileName">Luan Campos</h2>
+            <strong class="profile-role">Fundador & Diretor Criativo da GROWFASE</strong>
+            <p>Especialista em posicionamento visual e materiais comerciais para marcas que querem parecer maiores, mais claras e mais confiáveis.</p>
+            <img class="floating-logo asset-logo" src="/assets/figma/265-384.png" alt="" />
+          </section>
+
+          <section class="process">
+            <h2>Entenda o nosso Processo de Desenvolvimento do seu projeto:</h2>
+            <ol>
+              <li><span>1</span> Alinhamento</li>
+              <li><span>2</span> Design do cartão</li>
+              <li><span>3</span> Produção e impressão</li>
+              <li><span>4</span> Entrega e revisão final</li>
+            </ol>
+            <div class="deadline">Prazo estimado <strong id="deadline">7 a 10 dias</strong></div>
+          </section>
+
+          <section class="interest">
+            <p class="section-tag">Investimento</p>
+            <h2>Vamos, para o que mais interessa?</h2>
+            <div class="interest-card">
+              <img src="/assets/figma/265-465.png" alt="" />
+              <span>Orçamento gerado para</span>
+              <strong id="interestClient">Luan Campos</strong>
+              <small id="interestSummary">500 unidades · Cartão Premium</small>
+            </div>
+          </section>
+
+          <section class="content-section light" id="orcamento">
+            <p class="section-tag">Investimento para o projeto</p>
+            <h2>Cartão de visita</h2>
+            <div class="price-hero">
+              <span>Selecionado</span>
+              <strong id="priceHeroTotal">R$ 855,00</strong>
+              <small id="priceHeroSummary">500 unidades · Cartão Premium</small>
+            </div>
+            <div class="plan-card featured">
+              <p>Proposta selecionada</p>
+              <h3 id="planTitle">Cartão Premium</h3>
+              <ul id="includedList"></ul>
+              <strong id="proposalTotal">R$ 480,00</strong>
+            </div>
+
+            <div class="package-list" aria-label="Opções de orçamento">
+              <article class="package-card" data-package="standard">
+                <span>Start</span>
+                <h3>Essencial</h3>
+                <p>Para quem precisa de um cartão limpo e profissional.</p>
+                <strong id="standardPrice">R$ 495,00</strong>
+              </article>
+              <article class="package-card selected" data-package="premium">
+                <span>Pro</span>
+                <h3>Premium</h3>
+                <p>Laminação fosca e verniz localizado para maior percepção de valor.</p>
+                <strong id="premiumPrice">R$ 855,00</strong>
+              </article>
+              <article class="package-card" data-package="luxury">
+                <span>Premium</span>
+                <h3>Luxo</h3>
+                <p>Papel especial e acabamento nobre para uma apresentação memorável.</p>
+                <strong id="luxuryPrice">R$ 1.315,00</strong>
+              </article>
+            </div>
+
+            <div class="summary-card">
+              <div><span>Quantidade</span><strong id="summaryQty">500 unidades</strong></div>
+              <div><span>Acabamento</span><strong id="summaryFinish">Verniz localizado + laminação fosca</strong></div>
+              <div><span>Validade</span><strong>7 dias</strong></div>
+            </div>
+          </section>
+
+          <section class="content-section light addons">
+            <h2>Acabamentos adicionais</h2>
+            <div class="addon-row" data-addon="rounded"><span>Cantos arredondados</span><strong>+ R$ 90,00</strong></div>
+            <div class="addon-row" data-addon="hotStamp"><span>Hot stamping dourado</span><strong>+ R$ 180,00</strong></div>
+            <div class="addon-row" data-addon="qrCode"><span>QR Code personalizado</span><strong>Incluído</strong></div>
+            <div class="addon-row" data-addon="openFile"><span>Arquivo aberto editável</span><strong>+ R$ 120,00</strong></div>
+          </section>
+
+          <section class="content-section light payments">
+            <h2>Formas de Pagamento</h2>
+            <div class="payment-row"><span>Pix</span><strong>5% de desconto</strong></div>
+            <div class="payment-row"><span>Cartão</span><strong>até 3x sem juros</strong></div>
+            <div class="payment-row"><span>Entrada</span><strong>50% na aprovação</strong></div>
+            <p>Iniciaremos logo após o primeiro pagamento.</p>
+          </section>
+
+          <section class="faq" id="faq">
+            <p class="section-tag">FAQ</p>
+            <h2>Perguntas Frequentes</h2>
+            <details open>
+              <summary>O valor inclui criação e impressão?</summary>
+              <p>Sim. A proposta contempla design, preparação de arquivo e impressão conforme as opções selecionadas.</p>
+            </details>
+            <details>
+              <summary>Posso alterar informações depois?</summary>
+              <p>Sim. Ajustes de texto e pequenos refinamentos entram na etapa de revisão antes do envio para produção.</p>
+            </details>
+            <details>
+              <summary>Qual o prazo de entrega?</summary>
+              <p>O prazo varia conforme acabamento e urgência, mas normalmente fica entre 7 e 10 dias úteis.</p>
+            </details>
+            <img class="footer-logo asset-logo" src="/assets/figma/267-688.png" alt="" />
+          </section>
+        </article>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script src="/app.js?v=design-system-1"></script>
+  </body>
+</html>
