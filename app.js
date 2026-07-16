@@ -460,10 +460,10 @@ document.querySelector("#copyPreview").addEventListener("click", async () => {
     previewLinkOutput.textContent = link;
     label.textContent = "Link copiado";
     setTimeout(() => {
-      label.textContent = "Copiar link";
+      label.textContent = "Gerar link";
     }, 1600);
   } catch (error) {
-    label.textContent = "Copiar link";
+    label.textContent = "Gerar link";
     alert(error.message);
   }
 });

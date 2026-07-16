@@ -75,7 +75,7 @@ O azul deve aparecer com intenção e não dominar toda a interface. Estados de 
 - Ações organizadas numa grelha de duas colunas.
 - Ações primárias usam fundo `--accent` e texto `#050505`.
 - Ações secundárias usam fundo escuro e borda visível.
-- O gerador deve ter uma caixa única para definir o valor final em euros. Acabamentos, impressão e extras de produção não devem aparecer como opções do editor quando forem executados por outra empresa. O link público deve ser limpo no formato `https://growfase.com/orcamento/[nome-do-cliente]`.
+- O gerador deve ter uma caixa única para definir o valor final em euros. Acabamentos, impressão e extras de produção não devem aparecer como opções do editor quando forem executados por outra empresa. O link público deve ser limpo no formato `https://www.growfase.com/orcamento/[nome-do-cliente]`. A ação `Gerar link` deve guardar a proposta no Supabase antes de copiar/mostrar o link.
 
 ### Proposta
 
@@ -181,3 +181,4 @@ Ao receber uma alteração de design:
 | 2026-07-16 | Ajustado o card MB WAY para empilhar o botão em ecrãs estreitos e corrigida a especificidade do ícone no título do gerador. |
 | 2026-07-16 | Adicionada galeria selecionável de Cartões de visita na área de trabalhos, usando os assets reais adicionados em `assets/figma/works/Cartão de visitas/`. |
 | 2026-07-16 | Corrigida a galeria de Cartões de visita para apresentar os assets em proporção quadrada 1:1. |
+| 2026-07-16 | Renomeada a ação de copiar para `Gerar link` e fixado o formato canónico `https://www.growfase.com/orcamento/[cliente]`, guardando no Supabase antes de expor o link. |

@@ -9,6 +9,7 @@ const indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
 
 assert.match(appJs, /https:\/\/www\.growfase\.com\/orcamento/);
 assert.match(indexHtml, /https:\/\/www\.growfase\.com\/orcamento\/luan-campos/);
+assert.match(indexHtml, />Gerar link</);
 assert.doesNotMatch(appJs, /https:\/\/growfase\.com\/orcamento/);
 assert.doesNotMatch(indexHtml, /https:\/\/growfase\.com\/orcamento/);
 
