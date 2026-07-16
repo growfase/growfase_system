@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;600;700&family=Orbitron:wght@400;500;700;900&family=Oxanium:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/styles.css?v=design-system-1" />
+    <link rel="stylesheet" href="/styles.css?v=design-system-37" />
   </head>
   <body>
     <main class="workspace">
@@ -24,9 +24,9 @@
 
       <aside class="builder" aria-label="Criador de orçamento">
         <div class="builder__brand">
-          <span class="brand-mark">G</span>
+          <span class="brand-mark"><img src="/assets/figma/logo.png" alt="" /></span>
           <div>
-            <strong>Growfase Studio</strong>
+            <strong class="builder-title"><i data-lucide="wand-sparkles" aria-hidden="true"></i>Growfase Studio</strong>
             <span>Gerador de orçamento</span>
           </div>
         </div>
@@ -40,6 +40,34 @@
           <label>
             Empresa
             <input name="companyName" value="Growfase" />
+          </label>
+
+          <label>
+            Título da proposta
+            <textarea name="proposalTitle" rows="5">Proposta
+Identidade
+visual e
+Redes
+Sociais</textarea>
+          </label>
+
+          <label>
+            Serviço solicitado
+            <select name="requestedService">
+              <option value="businessCard" selected>Cartão de visita</option>
+              <option value="adsManagement">Gestão de Anuncios</option>
+              <option value="landingPage">Landing Page</option>
+              <option value="institutionalWebsite">Website instituicional</option>
+              <option value="socialMedia">Redes sociais</option>
+            </select>
+          </label>
+
+          <label>
+            FAQ
+            <select name="faqType">
+              <option value="designGeneral" selected>Cartão/design geral</option>
+              <option value="website">Website</option>
+            </select>
           </label>
 
           <label>
@@ -70,22 +98,35 @@
           </fieldset>
 
           <fieldset>
-            <legend>Acabamentos extras</legend>
-            <label class="check"><input type="checkbox" name="rounded" /> Cantos arredondados</label>
-            <label class="check"><input type="checkbox" name="hotStamp" /> Hot stamping dourado</label>
-            <label class="check"><input type="checkbox" name="qrCode" checked /> QR Code personalizado</label>
-            <label class="check"><input type="checkbox" name="openFile" /> Arquivo aberto editável</label>
+            <legend>Portfólio visível</legend>
+            <label class="check"><input type="checkbox" name="showWebsites" checked /> Websites</label>
+            <label class="check"><input type="checkbox" name="showSocial" checked /> Redes Sociais</label>
+            <label class="check"><input type="checkbox" name="showBusinessCards" checked /> Cartões de visita</label>
+            <label class="check"><input type="checkbox" name="socialUpra" checked /> UPRA</label>
+            <label class="check"><input type="checkbox" name="socialAxiscore" checked /> Axis Core</label>
+            <label class="check"><input type="checkbox" name="socialGreenlife" checked /> Green Life</label>
+            <label class="check"><input type="checkbox" name="socialErafisio" checked /> ERA Fisio</label>
           </fieldset>
+
+          <fieldset class="value-box">
+            <legend>Valores em euros</legend>
+            <label>
+              Valor final do orçamento
+              <input type="number" name="quoteValue" value="855" min="0" step="0.01" />
+            </label>
+          </fieldset>
+
+          <label>
+            Prazo estimado
+            <input name="deadlineText" value="7 a 15 dias úteis" />
+          </label>
 
           <label>
             Observações
             <textarea name="notes" rows="4">Cartão de visita para presença profissional, com visual limpo, memorável e pronto para impressão.</textarea>
           </label>
 
-          <label>
-            Domínio da pré-visualização
-            <input name="previewBase" value="https://growfase.com/orcamento" />
-          </label>
+          <input type="hidden" name="previewBase" value="https://growfase.com/orcamento" />
         </form>
 
         <div class="preview-link-card">
@@ -95,7 +136,7 @@
 
         <div class="builder__total">
           <span>Total estimado</span>
-          <strong id="builderTotal">R$ 480,00</strong>
+          <strong id="builderTotal">480,00 €</strong>
         </div>
 
         <div class="builder__actions">
@@ -122,12 +163,13 @@
         <article class="proposal" id="proposal">
           <header class="proposal-nav">
             <div class="logo">
-              <span class="logo-icon">G</span>
+              <img class="logo-image" src="/assets/figma/logo.png" alt="" />
               <span>GROWFASE</span>
             </div>
             <nav>
               <a href="#briefing">Web design</a>
               <a href="#orcamento">UX UI</a>
+              <a href="#processo">Tráfego</a>
               <a href="#faq">Social Media</a>
             </nav>
           </header>
@@ -136,35 +178,111 @@
             <div class="client-line">
               <span>Cliente:</span>
               <strong id="heroClient">Luan Campos</strong>
+              <small>-</small>
+              <em id="heroCompany">Growfase</em>
             </div>
-            <p class="eyebrow">Proposta comercial</p>
-            <h1>Proposta Cartão de Visita</h1>
+            <h1 id="proposalTitle">
+              <span>Proposta</span>
+              <span>Identidade</span>
+              <span>visual e</span>
+              <span>Redes</span>
+              <span>Sociais</span>
+            </h1>
             <div class="hero-card">
-              <img class="hero-asset" src="/assets/figma/470-308.png" alt="" />
+              <img class="hero-asset" src="/assets/figma/MacBook_mokup.png" alt="" />
             </div>
           </section>
 
-          <section class="content-section light briefing-card" id="briefing">
-            <span class="ghost-word">Grow</span>
-            <h2>Qual o objetivo da Growfase para o seu projeto?</h2>
-            <p>
-              Desenvolver um cartão de visita profissional para <strong id="clientIntro">Luan Campos</strong>,
-              alinhado à identidade da marca, com acabamento de alta percepção e pronto para impressão.
-            </p>
-            <p id="proposalNotes">
-              Cartão de visita para presença profissional, com visual limpo, memorável e pronto para impressão.
-            </p>
-          </section>
+          <section class="objective-section" id="briefing">
+            <nav class="objective-tabs" aria-label="Serviços Growfase">
+              <a href="#briefing">Web design</a>
+              <a href="#processo">Dev</a>
+              <a href="#orcamento">Gestão de Tráfego</a>
+              <a href="#faq">Redes Social</a>
+            </nav>
 
-          <section class="content-section light gallery">
-            <p class="section-tag">Referência visual</p>
-            <h2>Cartão de Visita</h2>
-            <div class="mockup-card main-mockup">
-              <img src="/assets/figma/463-210.png" alt="" />
+            <h2>Qual o objetivo da <strong>GROWFASE</strong> para o seu projeto?</h2>
+
+            <div class="objective-copy">
+              <p>Na Growfase, <strong>não criamos apenas sites ou design simples.</strong> Criamos sistemas digitais que geram resultados.</p>
+              <p>Combinamos design de <strong>alta conversão</strong>, <strong>tecnologia</strong> e <strong>estratégia</strong> para transformar a tua presença digital em uma máquina <strong>previsível de crescimento.</strong></p>
+              <p>Trabalhamos com <strong>tecnologia premium</strong>, <strong>traqueamento</strong>, processos testados para fazer o teu projeto acontecer no prazo, no budget e com excelência.</p>
+              <p>Entregamos o projeto completo, desde estratégia, copywrite, design, implementação técnica e até todo o marketing, tudo num só lugar.</p>
             </div>
-            <div class="mockup-grid">
-              <img src="/assets/figma/465-396.png" alt="" />
-              <img src="/assets/figma/466-489.png" alt="" />
+
+            <div class="works-heading" data-portfolio="websites">
+              <span>Nossos trabalhos</span>
+              <h3>Websites</h3>
+            </div>
+
+            <div class="website-showcase" data-portfolio="websites" aria-label="Trabalhos de websites">
+              <figure>
+                <img src="/assets/figma/works/websites/AxisCore.png" alt="Website AxisCore" />
+              </figure>
+              <figure>
+                <img src="/assets/figma/works/websites/Greenlife.png" alt="Website Greenlife" />
+              </figure>
+              <figure>
+                <img src="/assets/figma/works/websites/mushome.png" alt="Website Mushome" />
+              </figure>
+            </div>
+
+            <div class="works-heading social-heading" data-portfolio="social">
+              <h3>Redes Sociais</h3>
+            </div>
+
+            <div class="social-showcase" data-portfolio="social" aria-label="Trabalhos de redes sociais">
+              <article class="social-work" data-social-work="upra">
+                <img class="work-logo" src="/assets/figma/works/empresas_logo/upra.png" alt="UPRA" />
+                <div class="social-frame">
+                  <img src="/assets/figma/works/redes%20sociais/upra/Frame%2066.png?v=upra-frame-66-20260716" alt="Post social UPRA - Boas Estratégias" />
+                  <img class="is-featured" src="/assets/figma/works/redes%20sociais/upra/Frame%2065.png" alt="Post social UPRA em destaque" />
+                  <img src="/assets/figma/works/redes%20sociais/upra/Frame%2067.png" alt="Post social UPRA" />
+                </div>
+              </article>
+
+              <article class="social-work" data-social-work="axiscore">
+                <img class="work-logo" src="/assets/figma/works/empresas_logo/axiscore.png" alt="Axis Core" />
+                <div class="social-frame">
+                  <img src="/assets/figma/works/redes%20sociais/axiscores/Post1.png" alt="Post social Axis Core" />
+                  <img class="is-featured" src="/assets/figma/works/redes%20sociais/axiscores/post2.png" alt="Post social Axis Core em destaque" />
+                  <img src="/assets/figma/works/redes%20sociais/axiscores/post3.png" alt="Post social Axis Core" />
+                </div>
+              </article>
+
+              <article class="social-work" data-social-work="greenlife">
+                <img class="work-logo" src="/assets/figma/works/empresas_logo/greenlife.png" alt="Green Life" />
+                <div class="social-frame">
+                  <img src="/assets/figma/works/redes%20sociais/greenlife/post1.png" alt="Post social Green Life" />
+                  <img class="is-featured" src="/assets/figma/works/redes%20sociais/greenlife/post2.png" alt="Post social Green Life em destaque" />
+                  <img src="/assets/figma/works/redes%20sociais/greenlife/post3.png" alt="Post social Green Life" />
+                </div>
+              </article>
+
+              <article class="social-work" data-social-work="erafisio">
+                <img class="work-logo" src="/assets/figma/works/empresas_logo/erafisio.png" alt="ERA Fisio" />
+                <div class="social-frame">
+                  <img src="/assets/figma/works/redes%20sociais/erafisio/post1.png" alt="Post social ERA Fisio" />
+                  <img class="is-featured" src="/assets/figma/works/redes%20sociais/erafisio/post2.png" alt="Post social ERA Fisio em destaque" />
+                  <img src="/assets/figma/works/redes%20sociais/erafisio/post3.png" alt="Post social ERA Fisio" />
+                </div>
+              </article>
+            </div>
+
+            <div class="works-heading business-card-heading" data-portfolio="businessCards">
+              <h3>Cartões de visita</h3>
+            </div>
+
+            <div class="business-card-showcase" data-portfolio="businessCards" aria-label="Trabalhos de cartões de visita">
+              <figure>
+                <img src="/assets/figma/works/Cart%C3%A3o%20de%20visitas/Erafisio_cart%C3%A3o.png" alt="Cartão de visita ERA Fisio" />
+              </figure>
+              <figure>
+                <img src="/assets/figma/works/Cart%C3%A3o%20de%20visitas/Ligia_campos_cart%C3%A3o.png" alt="Cartão de visita Ligia Campos" />
+              </figure>
+              <figure>
+                <img src="/assets/figma/works/Cart%C3%A3o%20de%20visitas/mushroom%20events.png" alt="Cartão de visita Mushroom Events" />
+              </figure>
             </div>
           </section>
 
@@ -196,116 +314,219 @@
           </section>
 
           <section class="profile">
-            <img class="portrait" src="/assets/figma/265-377.png" alt="" />
-            <h2 id="profileName">Luan Campos</h2>
-            <strong class="profile-role">Fundador & Diretor Criativo da GROWFASE</strong>
-            <p>Especialista em posicionamento visual e materiais comerciais para marcas que querem parecer maiores, mais claras e mais confiáveis.</p>
-            <img class="floating-logo asset-logo" src="/assets/figma/265-384.png" alt="" />
+            <figure class="profile-hero">
+              <img class="portrait" src="/assets/figma/Luan_photo.png" alt="Retrato de Luan Campos" />
+            </figure>
+
+            <div class="profile-copy">
+              <p>Olá! Sou o Luan, fundador e designer da Growfase, a pessoa por de trás do teu projeto.</p>
+              <p>Já ajudamos empresas e profissionais em Portugal a tirarem as suas ideias do papel e melhorar de <strong>forma estratégica, criativa e visual</strong> a estrutura dos seus projetos no digital.</p>
+              <p>Desde uma simples Página Web a uma web app mais complexa, na Growfase o objetivo é entregar resultados por meio de soluções premium em design e tecnologia.</p>
+            </div>
+
+            <img class="profile-phone" src="/assets/figma/mokup_phone.png" alt="" />
           </section>
 
-          <section class="process">
-            <h2>Entenda o nosso Processo de Desenvolvimento do seu projeto:</h2>
-            <ol>
-              <li><span>1</span> Alinhamento</li>
-              <li><span>2</span> Design do cartão</li>
-              <li><span>3</span> Produção e impressão</li>
-              <li><span>4</span> Entrega e revisão final</li>
+          <section class="process" id="processo">
+            <div class="process-bg" aria-hidden="true">
+              <span>GROWFASE</span>
+              <span>GROWFASE</span>
+              <span>GROWFASE</span>
+            </div>
+            <nav class="process-tabs" aria-label="Serviços Growfase">
+              <a href="#briefing">Web design</a>
+              <a href="#orcamento">UX UI</a>
+              <a href="#processo">Tráfego</a>
+              <a href="#faq">Social</a>
+            </nav>
+            <h2>Entenda o nosso Processo de Desenvolvimento do teu projeto/design</h2>
+
+            <div class="process-intro">
+              <small>Após contrato e pagamento</small>
+              <strong>É aqui que iniciamos a jornada</strong>
+            </div>
+
+            <ol class="process-timeline">
+              <li class="process-step">
+                <span class="process-dot"></span>
+                <div>
+                  <strong>Briefing/Documentação</strong>
+                  <small>Posicionamento que a marca quer ter no mercado.</small>
+                </div>
+              </li>
+              <li class="process-step">
+                <span class="process-dot"></span>
+                <div>
+                  <strong>Pesquisa de mercado</strong>
+                </div>
+              </li>
+              <li class="process-step">
+                <span class="process-dot"></span>
+                <div>
+                  <strong>Protótipo</strong>
+                </div>
+              </li>
+              <li class="process-step has-note">
+                <span class="process-side-note">Primeiras impressões e aprovação de design</span>
+                <span class="process-dot"></span>
+                <div>
+                  <strong>Design Final escolhido</strong>
+                </div>
+              </li>
+              <li class="process-step">
+                <span class="process-dot"></span>
+                <div>
+                  <strong>Desenvolvimento/impressão</strong>
+                </div>
+              </li>
+              <li class="process-step is-delivery">
+                <span class="process-dot"></span>
+                <div>
+                  <strong>Entrega/acompanhamento</strong>
+                  <i data-lucide="rocket" aria-hidden="true"></i>
+                </div>
+              </li>
+              <li class="process-step is-result">
+                <span class="process-dot"></span>
+                <div>
+                  <strong>Resultados</strong>
+                </div>
+              </li>
             </ol>
-            <div class="deadline">Prazo estimado <strong id="deadline">7 a 10 dias</strong></div>
+            <div class="deadline">
+              <span>Prazo de entrega<br />do projeto</span>
+              <strong>
+                <span id="deadlineMain">7 a 15 dias</span>
+                <small id="deadlineSuffix">úteis</small>
+              </strong>
+            </div>
           </section>
 
           <section class="interest">
-            <p class="section-tag">Investimento</p>
-            <h2>Vamos, para o que mais interessa?</h2>
             <div class="interest-card">
-              <img src="/assets/figma/265-465.png" alt="" />
-              <span>Orçamento gerado para</span>
-              <strong id="interestClient">Luan Campos</strong>
-              <small id="interestSummary">500 unidades · Cartão Premium</small>
+              <p>Serviços Solicitados</p>
+              <h2>Vamos para o que<br />mais <span>interessa?</span></h2>
+              <div class="requested-service">
+                <strong id="requestedServiceTitle">Cartão de visita</strong>
+                <small id="requestedServiceMeta">Design personalizado · Impressão · Arte final</small>
+                <div class="requested-service-row">
+                  <span id="requestedServicePrimary">Cartão Premium</span>
+                  <small id="requestedServicePrimaryMeta">500 unidades · Verniz localizado</small>
+                </div>
+                <div class="requested-service-row">
+                  <span id="requestedServiceSecondary">Arquivo final</span>
+                  <small id="requestedServiceSecondaryMeta">Pronto para gráfica</small>
+                </div>
+              </div>
             </div>
           </section>
 
-          <section class="content-section light" id="orcamento">
-            <p class="section-tag">Investimento para o projeto</p>
-            <h2>Cartão de visita</h2>
-            <div class="price-hero">
-              <span>Selecionado</span>
-              <strong id="priceHeroTotal">R$ 855,00</strong>
-              <small id="priceHeroSummary">500 unidades · Cartão Premium</small>
-            </div>
-            <div class="plan-card featured">
-              <p>Proposta selecionada</p>
-              <h3 id="planTitle">Cartão Premium</h3>
-              <ul id="includedList"></ul>
-              <strong id="proposalTotal">R$ 480,00</strong>
+          <section class="content-section light budget-section" id="orcamento">
+            <h2 class="budget-heading">Investimento para <span id="budgetServiceTitle">Cartão de visita</span></h2>
+
+            <div class="investment-table">
+              <div class="investment-row">
+                <span>Design cartão de visita</span>
+                <strong id="priceHeroTotal">855,00 €</strong>
+              </div>
+              <div class="investment-row">
+                <span>Arte final para produção</span>
+                <strong>Oferta</strong>
+              </div>
+              <div class="investment-row">
+                <span>QR Code personalizado</span>
+                <strong>Oferta</strong>
+              </div>
+              <div class="investment-row">
+                <span>Impressão <small>(à parte)</small></span>
+                <strong>À parte</strong>
+              </div>
+              <div class="investment-row is-offer">
+                <span>2 rodadas de ajustes</span>
+                <strong>0€</strong>
+              </div>
+              <div class="investment-row is-offer">
+                <span>Preparação para gráfica</span>
+                <strong>0€</strong>
+              </div>
+              <div class="investment-row is-total">
+                <span>Total</span>
+                <strong id="proposalTotal">855,00 €</strong>
+              </div>
             </div>
 
-            <div class="package-list" aria-label="Opções de orçamento">
-              <article class="package-card" data-package="standard">
-                <span>Start</span>
-                <h3>Essencial</h3>
-                <p>Para quem precisa de um cartão limpo e profissional.</p>
-                <strong id="standardPrice">R$ 495,00</strong>
+            <h2 class="payment-heading">Formas de <span>Pagamento</span></h2>
+
+            <div class="payment-options">
+              <article class="payment-card is-compact">
+                <span>Integral</span>
+                <strong id="paymentFull">855,00 €</strong>
               </article>
-              <article class="package-card selected" data-package="premium">
-                <span>Pro</span>
-                <h3>Premium</h3>
-                <p>Laminação fosca e verniz localizado para maior percepção de valor.</p>
-                <strong id="premiumPrice">R$ 855,00</strong>
-              </article>
-              <article class="package-card" data-package="luxury">
-                <span>Premium</span>
-                <h3>Luxo</h3>
-                <p>Papel especial e acabamento nobre para uma apresentação memorável.</p>
-                <strong id="luxuryPrice">R$ 1.315,00</strong>
+              <article class="payment-card">
+                <span>Em duas Parcelas</span>
+                <img class="mbway-logo" src="/assets/figma/mbway.png" alt="MB WAY" />
+                <div class="payment-line">
+                  <small>50% no início</small>
+                  <strong id="paymentHalfFirst">427,50 €</strong>
+                </div>
+                <div class="payment-line">
+                  <small>50% na entrega</small>
+                  <strong id="paymentHalfSecond">427,50 €</strong>
+                </div>
               </article>
             </div>
 
-            <div class="summary-card">
-              <div><span>Quantidade</span><strong id="summaryQty">500 unidades</strong></div>
-              <div><span>Acabamento</span><strong id="summaryFinish">Verniz localizado + laminação fosca</strong></div>
-              <div><span>Validade</span><strong>7 dias</strong></div>
-            </div>
-          </section>
+            <article class="mbway-card" aria-label="Pagamento por MB WAY">
+              <div>
+                <span>MB WAY</span>
+                <strong>+351 931 948 650</strong>
+                <small>Enviar comprovativo após pagamento.</small>
+              </div>
+              <button type="button" id="copyMbway">
+                <i data-lucide="copy" aria-hidden="true"></i>
+                <span class="button-label">Copiar número</span>
+              </button>
+            </article>
 
-          <section class="content-section light addons">
-            <h2>Acabamentos adicionais</h2>
-            <div class="addon-row" data-addon="rounded"><span>Cantos arredondados</span><strong>+ R$ 90,00</strong></div>
-            <div class="addon-row" data-addon="hotStamp"><span>Hot stamping dourado</span><strong>+ R$ 180,00</strong></div>
-            <div class="addon-row" data-addon="qrCode"><span>QR Code personalizado</span><strong>Incluído</strong></div>
-            <div class="addon-row" data-addon="openFile"><span>Arquivo aberto editável</span><strong>+ R$ 120,00</strong></div>
-          </section>
-
-          <section class="content-section light payments">
-            <h2>Formas de Pagamento</h2>
-            <div class="payment-row"><span>Pix</span><strong>5% de desconto</strong></div>
-            <div class="payment-row"><span>Cartão</span><strong>até 3x sem juros</strong></div>
-            <div class="payment-row"><span>Entrada</span><strong>50% na aprovação</strong></div>
-            <p>Iniciaremos logo após o primeiro pagamento.</p>
+            <h2 class="payment-start-note">Iniciaremos após <span>pagamento.</span></h2>
+            <a class="whatsapp-confirm" href="https://wa.me/?text=Ol%C3%A1%2C%20quero%20confirmar%20esta%20proposta%20da%20Growfase." target="_blank" rel="noopener">
+              <i data-lucide="message-circle" aria-hidden="true"></i>
+              Confirmar proposta no WhatsApp
+            </a>
           </section>
 
           <section class="faq" id="faq">
-            <p class="section-tag">FAQ</p>
+            <p class="section-tag">Dúvidas</p>
             <h2>Perguntas Frequentes</h2>
-            <details open>
-              <summary>O valor inclui criação e impressão?</summary>
-              <p>Sim. A proposta contempla design, preparação de arquivo e impressão conforme as opções selecionadas.</p>
-            </details>
-            <details>
-              <summary>Posso alterar informações depois?</summary>
-              <p>Sim. Ajustes de texto e pequenos refinamentos entram na etapa de revisão antes do envio para produção.</p>
-            </details>
-            <details>
-              <summary>Qual o prazo de entrega?</summary>
-              <p>O prazo varia conforme acabamento e urgência, mas normalmente fica entre 7 e 10 dias úteis.</p>
-            </details>
-            <img class="footer-logo asset-logo" src="/assets/figma/267-688.png" alt="" />
+            <div class="faq-list">
+              <article data-faq-card>
+                <h3>Está incluída a impressão?</h3>
+                <p>Não. A impressão é feita à parte. A proposta inclui a criação do design e preparação dos ficheiros finais para produção.</p>
+              </article>
+              <article data-faq-card>
+                <h3>Posso pedir alterações depois da entrega?</h3>
+                <p>Sim! A proposta inclui 2 rodadas de revisão durante o desenvolvimento. Alterações adicionais de escopo ou novas peças podem ser orçadas separadamente.</p>
+              </article>
+              <article data-faq-card>
+                <h3>Recebo os ficheiros finais?</h3>
+                <p>Sim. Entregamos os ficheiros finais prontos para uso e produção. Arquivos editáveis podem ser incluídos se estiverem previstos na proposta.</p>
+              </article>
+              <article data-faq-card>
+                <h3>Posso pedir outros formatos depois?</h3>
+                <p>Sim. Podemos adaptar a arte para outros formatos, variações ou materiais adicionais mediante novo orçamento.</p>
+              </article>
+              <article data-faq-card>
+                <h3>Quanto tempo demora até ficar pronto?</h3>
+                <p>O prazo é de 7-15 dias úteis após confirmação do projeto e recebimento do sinal mínimo de 50%. O tempo pode variar conforme feedbacks e aprovações.</p>
+              </article>
+            </div>
+            <img class="footer-logo" src="/assets/figma/logo.png" alt="" />
           </section>
         </article>
       </section>
     </main>
 
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-    <script src="/app.js?v=design-system-1"></script>
+    <script src="/app.js?v=design-system-37"></script>
   </body>
 </html>

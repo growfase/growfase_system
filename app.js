@@ -1,96 +1,193 @@
 const form = document.querySelector("#quoteForm");
 const finishSelect = form.elements.finish;
 const previewLinkOutput = document.querySelector("#previewLink");
+const mbwayNumber = "+351 931 948 650";
 
 if (window.lucide) {
   window.lucide.createIcons();
 }
 
-const currency = new Intl.NumberFormat("pt-BR", {
+const currency = new Intl.NumberFormat("pt-PT", {
   style: "currency",
-  currency: "BRL",
+  currency: "EUR",
 });
 
-const finishMap = {
+const finishTemplate = {
   standard: {
     label: "Couchê 300g fosco",
     title: "Cartão Essencial",
-    unit: 0.62,
-    base: 160,
     deadline: "5 a 7 dias",
   },
   premium: {
     label: "Verniz localizado + laminação fosca",
     title: "Cartão Premium",
-    unit: 0.84,
-    base: 220,
     deadline: "7 a 10 dias",
   },
   luxury: {
     label: "Papel especial 600g + hot stamping",
     title: "Cartão Luxo",
-    unit: 1.48,
-    base: 360,
     deadline: "10 a 15 dias",
   },
 };
 
-const serviceMap = {
-  design: { label: "Design personalizado", value: 180 },
-  print: { label: "Impressão inclusa", value: 0 },
-  delivery: { label: "Entrega local", value: 35 },
-  urgent: { label: "Prazo urgente", value: 120 },
+const serviceTemplate = {
+  design: { label: "Design personalizado" },
+  print: { label: "Impressão inclusa" },
+  delivery: { label: "Entrega local" },
+  urgent: { label: "Prazo urgente" },
 };
 
-const addonMap = {
-  rounded: { label: "Cantos arredondados", value: 90 },
-  hotStamp: { label: "Hot stamping dourado", value: 180 },
-  qrCode: { label: "QR Code personalizado", value: 0 },
-  openFile: { label: "Arquivo aberto editável", value: 120 },
+const requestedServiceTemplate = {
+  businessCard: {
+    title: "Cartão de visita",
+    meta: "Design personalizado · Impressão · Arte final",
+    primary: "Cartão Premium",
+    primaryMeta: "500 unidades · Verniz localizado",
+    secondary: "Arquivo final",
+    secondaryMeta: "Pronto para gráfica",
+  },
+  adsManagement: {
+    title: "Marketing",
+    meta: "Design · Implementação · Comunicação · Marketing",
+    primary: "Gestão de Anuncios",
+    primaryMeta: "Meta Ads · Google Ads · Otimização",
+    secondary: "Relatórios",
+    secondaryMeta: "Acompanhamento e melhoria contínua",
+  },
+  landingPage: {
+    title: "Landing Page",
+    meta: "UX/UI · Copywriting · Desenvolvimento",
+    primary: "Página de conversão",
+    primaryMeta: "Estrutura estratégica · Responsiva",
+    secondary: "Integrações",
+    secondaryMeta: "Formulário · Tracking · Publicação",
+  },
+  institutionalWebsite: {
+    title: "Website instituicional",
+    meta: "Web design · Desenvolvimento · SEO técnico",
+    primary: "Site institucional",
+    primaryMeta: "Páginas essenciais · Responsivo",
+    secondary: "Publicação",
+    secondaryMeta: "Performance · Segurança · Base SEO",
+  },
+  socialMedia: {
+    title: "Redes sociais",
+    meta: "Estratégia · Design · Conteúdo",
+    primary: "Posts e criativos",
+    primaryMeta: "Instagram · Facebook · LinkedIn",
+    secondary: "Calendário editorial",
+    secondaryMeta: "Planeamento · Direção visual",
+  },
 };
+
+const faqTemplate = {
+  website: [
+    {
+      question: "Está incluído o registro de domínio e hospedagem?",
+      answer: "Não. O serviço de registo de domínio e hospedagem fazemos a parte.",
+    },
+    {
+      question: "Posso pedir alterações depois da entrega?",
+      answer: "Sim! A proposta inclui 2 rodadas de revisão durante o desenvolvimento. Após a entrega, tens 30 dias de suporte para bugs e ajustes pequenos. Alterações adicionais de escopo ou novas funcionalidades podem ser orçadas separadamente.",
+    },
+    {
+      question: "E se eu quiser adicionar novas secções/páginas depois?",
+      answer: "Sem problema! Podemos avaliar e orçar o escopo adicional. O projeto pode ser evoluído com novas páginas, integrações ou serviços conforme a tua necessidade.",
+    },
+    {
+      question: "Como fica a manutenção?",
+      answer: "O site/app fica totalmente funcional e não precisa de manutenção obrigatória. Porém, se quiseres suporte contínuo, atualizações de conteúdo ou melhorias mensais, podemos criar um plano de manutenção.",
+    },
+    {
+      question: "Quanto tempo demora até ficar pronto?",
+      answer: "O prazo é de 7-15 dias úteis após confirmação do projeto e recebimento do sinal mínimo de 50%. O tempo pode variar se houver atrasos no fornecimento de materiais (textos, imagens, logo) ou aprovações da tua parte.",
+    },
+  ],
+  designGeneral: [
+    {
+      question: "Está incluída a impressão?",
+      answer: "Não. A impressão é feita à parte. A proposta inclui a criação do design e preparação dos ficheiros finais para produção.",
+    },
+    {
+      question: "Posso pedir alterações depois da entrega?",
+      answer: "Sim! A proposta inclui 2 rodadas de revisão durante o desenvolvimento. Alterações adicionais de escopo ou novas peças podem ser orçadas separadamente.",
+    },
+    {
+      question: "Recebo os ficheiros finais?",
+      answer: "Sim. Entregamos os ficheiros finais prontos para uso e produção. Arquivos editáveis podem ser incluídos se estiverem previstos na proposta.",
+    },
+    {
+      question: "Posso pedir outros formatos depois?",
+      answer: "Sim. Podemos adaptar a arte para outros formatos, variações ou materiais adicionais mediante novo orçamento.",
+    },
+    {
+      question: "Quanto tempo demora até ficar pronto?",
+      answer: "O prazo é de 7-15 dias úteis após confirmação do projeto e recebimento do sinal mínimo de 50%. O tempo pode variar conforme feedbacks e aprovações.",
+    },
+  ],
+};
+
+const portfolioKeys = ["showWebsites", "showSocial", "showBusinessCards", "socialUpra", "socialAxiscore", "socialGreenlife", "socialErafisio"];
+
+function money(value, options = {}) {
+  const label = currency.format(Number(value || 0));
+  return options.plus && Number(value || 0) > 0 ? `+${label}` : label;
+}
+
+function numberFrom(data, field, fallback = 0) {
+  const value = Number(data.get(field));
+  return Number.isFinite(value) ? value : fallback;
+}
 
 function getCheckedServices(data) {
-  return Object.entries(serviceMap)
+  return Object.entries(serviceTemplate)
     .filter(([key]) => data.get(key) === "on")
     .map(([key, service]) => ({ key, ...service }));
 }
 
-function getCheckedAddons(data) {
-  return Object.entries(addonMap)
-    .filter(([key]) => data.get(key) === "on")
-    .map(([key, addon]) => ({ key, ...addon }));
-}
-
 function calculateQuote(data) {
   const quantity = Number(data.get("quantity"));
-  const finish = finishMap[data.get("finish")];
+  const finish = finishTemplate[data.get("finish")] || finishTemplate.premium;
   const services = getCheckedServices(data);
-  const addons = getCheckedAddons(data);
-  const serviceTotal = services.reduce((sum, service) => sum + service.value, 0);
-  const addonTotal = addons.reduce((sum, addon) => sum + addon.value, 0);
-  const production = finish.base + quantity * finish.unit;
-  const total = production + serviceTotal + addonTotal;
+  const total = numberFrom(data, "quoteValue", 0);
 
   return {
     quantity,
     finish,
     services,
-    addons,
     total,
     urgent: data.get("urgent") === "on",
   };
 }
 
-function calculateTotalForFinish(finishKey, quantity, services, addons) {
-  const finish = finishMap[finishKey];
-  const serviceTotal = services.reduce((sum, service) => sum + service.value, 0);
-  const addonTotal = addons.reduce((sum, addon) => sum + addon.value, 0);
-  return finish.base + quantity * finish.unit + serviceTotal + addonTotal;
-}
-
 function setText(id, value) {
   const element = document.querySelector(id);
   if (element) element.textContent = value;
+}
+
+function setMultilineText(id, value) {
+  const element = document.querySelector(id);
+  if (!element) return;
+
+  const lines = (value || "")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  element.innerHTML = "";
+  (lines.length ? lines : ["Proposta", "Identidade", "visual e", "Redes", "Sociais"]).forEach((line) => {
+    const span = document.createElement("span");
+    span.textContent = line;
+    element.appendChild(span);
+  });
+}
+
+function setDeadline(value) {
+  const normalized = (value || "7 a 15 dias úteis").trim();
+  const suffixMatch = normalized.match(/\s+(úteis|uteis)$/i);
+
+  setText("#deadlineMain", suffixMatch ? normalized.slice(0, suffixMatch.index).trim() : normalized);
+  setText("#deadlineSuffix", suffixMatch ? suffixMatch[1] : "");
 }
 
 function slugify(value) {
@@ -102,39 +199,38 @@ function slugify(value) {
     .replace(/^-+|-+$/g, "") || "cliente";
 }
 
-function encodeQuoteState(state) {
-  const json = JSON.stringify(state);
-  const bytes = new TextEncoder().encode(json);
-  let binary = "";
-  bytes.forEach((byte) => {
-    binary += String.fromCharCode(byte);
-  });
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+function selectedPortfolio(data) {
+  return Object.fromEntries(portfolioKeys.map((key) => [key, data.get(key) === "on"]));
 }
 
-function decodeQuoteState(payload) {
-  if (!payload) return null;
-  try {
-    const padded = payload.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(payload.length / 4) * 4, "=");
-    const binary = atob(padded);
-    const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
-    return JSON.parse(new TextDecoder().decode(bytes));
-  } catch {
-    return null;
-  }
+function getPricingState(data) {
+  return {
+    quoteValue: data.get("quoteValue"),
+  };
 }
 
 function getFormState() {
   const data = new FormData(form);
+  const quote = calculateQuote(data);
+  const clientName = data.get("clientName") || "";
+
   return {
-    clientName: data.get("clientName") || "",
+    slug: slugify(clientName),
+    clientName,
     companyName: data.get("companyName") || "",
+    proposalTitle: data.get("proposalTitle") || "Proposta\nIdentidade\nvisual e\nRedes\nSociais",
+    requestedService: data.get("requestedService") || "businessCard",
+    faqType: data.get("faqType") || "designGeneral",
     quantity: data.get("quantity") || "500",
     finish: data.get("finish") || "premium",
     notes: data.get("notes") || "",
-    previewBase: data.get("previewBase") || "https://growfase.com/orcamento",
-    services: Object.keys(serviceMap).filter((key) => data.get(key) === "on"),
-    addons: Object.keys(addonMap).filter((key) => data.get(key) === "on"),
+    deadlineText: data.get("deadlineText") || "7 a 15 dias úteis",
+    previewBase: "https://growfase.com/orcamento",
+    currency: "EUR",
+    total: Number(quote.total.toFixed(2)),
+    pricing: getPricingState(data),
+    portfolio: selectedPortfolio(data),
+    services: Object.keys(serviceTemplate).filter((key) => data.get(key) === "on"),
   };
 }
 
@@ -142,36 +238,48 @@ function applyQuoteState(state) {
   if (!state) return;
   form.elements.clientName.value = state.clientName || "Cliente";
   form.elements.companyName.value = state.companyName || "Growfase";
+  form.elements.proposalTitle.value = state.proposalTitle || "Proposta\nIdentidade\nvisual e\nRedes\nSociais";
+  form.elements.requestedService.value = state.requestedService || "businessCard";
+  form.elements.faqType.value = state.faqType || "designGeneral";
   form.elements.quantity.value = state.quantity || "500";
   form.elements.finish.value = state.finish || "premium";
   form.elements.notes.value = state.notes || "";
-  form.elements.previewBase.value = state.previewBase || "https://growfase.com/orcamento";
+  form.elements.deadlineText.value = state.deadlineText || "7 a 15 dias úteis";
+  form.elements.previewBase.value = "https://growfase.com/orcamento";
 
-  Object.keys(serviceMap).forEach((key) => {
+  Object.entries(state.pricing || {}).forEach(([key, value]) => {
+    if (form.elements[key]) form.elements[key].value = value;
+  });
+
+  if (state.pricing?.quoteValue == null && state.total != null) {
+    form.elements.quoteValue.value = state.total;
+  }
+
+  Object.keys(serviceTemplate).forEach((key) => {
     form.elements[key].checked = (state.services || []).includes(key);
   });
-  Object.keys(addonMap).forEach((key) => {
-    form.elements[key].checked = (state.addons || []).includes(key);
+
+  portfolioKeys.forEach((key) => {
+    if (form.elements[key]) form.elements[key].checked = state.portfolio?.[key] !== false;
   });
 }
 
 function getPreviewUrl(state, baseOverride) {
-  const slug = slugify(state.clientName);
   const base = (baseOverride || state.previewBase || "https://growfase.com/orcamento").replace(/\/+$/, "");
-  return `${base}/${slug}?q=${encodeQuoteState(state)}`;
+  return `${base}/${state.slug || slugify(state.clientName)}`;
 }
 
 function getLocalPreviewUrl(state) {
-  return `${window.location.origin}/orcamento/${slugify(state.clientName)}?q=${encodeQuoteState(state)}`;
+  return `${window.location.origin}/orcamento/${state.slug || slugify(state.clientName)}`;
 }
 
-function renderIncludedList(services, addons, finishLabel) {
+function renderIncludedList(services, finishLabel) {
   const list = document.querySelector("#includedList");
+  if (!list) return;
   list.innerHTML = "";
 
   [
     ...services.map((service) => service.label),
-    ...addons.map((addon) => addon.label),
     finishLabel,
     "Arquivo fechado para gráfica",
     "Até 2 rodadas de ajustes",
@@ -182,47 +290,136 @@ function renderIncludedList(services, addons, finishLabel) {
   });
 }
 
+function updatePortfolio(data) {
+  document.querySelectorAll('[data-portfolio="websites"]').forEach((element) => {
+    element.hidden = data.get("showWebsites") !== "on";
+  });
+
+  document.querySelectorAll('[data-portfolio="social"]').forEach((element) => {
+    element.hidden = data.get("showSocial") !== "on";
+  });
+
+  document.querySelectorAll('[data-portfolio="businessCards"]').forEach((element) => {
+    element.hidden = data.get("showBusinessCards") !== "on";
+  });
+
+  const socialMap = {
+    upra: "socialUpra",
+    axiscore: "socialAxiscore",
+    greenlife: "socialGreenlife",
+    erafisio: "socialErafisio",
+  };
+
+  document.querySelectorAll("[data-social-work]").forEach((element) => {
+    const field = socialMap[element.dataset.socialWork];
+    element.hidden = data.get("showSocial") !== "on" || data.get(field) !== "on";
+  });
+}
+
+function updateRequestedService(data, quote) {
+  const selectedService = requestedServiceTemplate[data.get("requestedService")] || requestedServiceTemplate.businessCard;
+
+  setText("#budgetServiceTitle", selectedService.title);
+  setText("#requestedServiceTitle", selectedService.title);
+  setText("#requestedServiceMeta", selectedService.meta);
+  setText("#requestedServicePrimary", selectedService.primary);
+  setText(
+    "#requestedServicePrimaryMeta",
+    data.get("requestedService") === "businessCard" ? `${quote.quantity.toLocaleString("pt-PT")} unidades · ${quote.finish.label}` : selectedService.primaryMeta,
+  );
+  setText("#requestedServiceSecondary", selectedService.secondary);
+  setText("#requestedServiceSecondaryMeta", selectedService.secondaryMeta);
+}
+
+function updateFaq(data) {
+  const faqItems = faqTemplate[data.get("faqType")] || faqTemplate.designGeneral;
+
+  document.querySelectorAll("[data-faq-card]").forEach((card, index) => {
+    const item = faqItems[index];
+    if (!item) return;
+    card.querySelector("h3").textContent = item.question;
+    card.querySelector("p").textContent = item.answer;
+  });
+}
+
 function updateProposal() {
   const data = new FormData(form);
   const state = getFormState();
   const quote = calculateQuote(data);
   const clientName = data.get("clientName").trim() || "Cliente";
   const companyName = data.get("companyName").trim() || "Empresa";
+  const proposalTitle = data.get("proposalTitle").trim() || "Proposta\nIdentidade\nvisual e\nRedes\nSociais";
   const notes = data.get("notes").trim();
-  const quantityLabel = `${quote.quantity.toLocaleString("pt-BR")} unidades`;
-  const totalLabel = currency.format(quote.total);
+  const deadlineText = data.get("deadlineText").trim() || "7 a 15 dias úteis";
+  const quantityLabel = `${quote.quantity.toLocaleString("pt-PT")} unidades`;
+  const totalLabel = money(quote.total);
 
   setText("#builderTotal", totalLabel);
   setText("#proposalTotal", totalLabel);
   setText("#priceHeroTotal", totalLabel);
   setText("#clientIntro", clientName);
   setText("#heroClient", clientName);
-  setText("#profileName", clientName);
+  setText("#heroCompany", companyName);
+  setMultilineText("#proposalTitle", proposalTitle);
   setText("#proposalNotes", notes || "Proposta preparada para criação e produção do material.");
   setText("#summaryQty", quantityLabel);
-  setText("#summaryFinish", quote.finish.label);
   setText("#planTitle", quote.finish.title);
-  setText("#deadline", quote.urgent ? "3 a 5 dias" : quote.finish.deadline);
-  setText("#interestClient", clientName);
-  setText("#interestSummary", `${quantityLabel} · ${quote.finish.title}`);
+  setDeadline(deadlineText);
   setText("#priceHeroSummary", `${quantityLabel} · ${quote.finish.title}`);
+  setText("#paymentFull", totalLabel);
+  setText("#paymentHalfFirst", money(quote.total / 2));
+  setText("#paymentHalfSecond", money(quote.total / 2));
 
-  Object.keys(finishMap).forEach((finishKey) => {
-    const price = calculateTotalForFinish(finishKey, quote.quantity, quote.services, quote.addons);
-    setText(`#${finishKey}Price`, currency.format(price));
+  Object.keys(finishTemplate).forEach((finishKey) => {
+    setText(`#${finishKey}Price`, money(quote.total));
   });
 
   document.querySelectorAll(".package-card").forEach((card) => {
     card.classList.toggle("selected", card.dataset.package === data.get("finish"));
   });
 
-  document.querySelectorAll(".addon-row").forEach((row) => {
-    row.classList.toggle("is-selected", data.get(row.dataset.addon) === "on");
-  });
-
-  renderIncludedList(quote.services, quote.addons, quote.finish.label);
+  updatePortfolio(data);
+  updateRequestedService(data, quote);
+  updateFaq(data);
+  renderIncludedList(quote.services, quote.finish.label);
   previewLinkOutput.value = getPreviewUrl(state);
   previewLinkOutput.textContent = getPreviewUrl(state);
+}
+
+async function saveQuote() {
+  const state = getFormState();
+  const response = await fetch("/api/quotes", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(state),
+  });
+
+  const payload = await response.json();
+  if (!response.ok) throw new Error(payload.error || "Não foi possível guardar o orçamento.");
+  return payload;
+}
+
+async function copyToClipboard(value) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+
+  const input = document.createElement("input");
+  input.value = value;
+  input.setAttribute("readonly", "");
+  input.style.position = "fixed";
+  input.style.opacity = "0";
+  document.body.appendChild(input);
+  input.select();
+  document.execCommand("copy");
+  input.remove();
+}
+
+async function loadQuoteFromDatabase(slug) {
+  const response = await fetch(`/api/quotes/${encodeURIComponent(slug)}`);
+  if (!response.ok) return null;
+  return response.json();
 }
 
 form.addEventListener("input", updateProposal);
@@ -239,21 +436,49 @@ document.querySelector("#printQuote").addEventListener("click", () => {
   window.print();
 });
 
-document.querySelector("#openPreview").addEventListener("click", () => {
-  window.open(getLocalPreviewUrl(getFormState()), "_blank");
+document.querySelector("#openPreview").addEventListener("click", async () => {
+  const label = document.querySelector("#openPreview .button-label");
+  label.textContent = "A guardar";
+  try {
+    const saved = await saveQuote();
+    window.open(getLocalPreviewUrl(saved), "_blank");
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    label.textContent = "Abrir link";
+  }
 });
 
 document.querySelector("#copyPreview").addEventListener("click", async () => {
-  const link = getPreviewUrl(getFormState());
   const label = document.querySelector("#copyPreview .button-label");
+  label.textContent = "A guardar";
   try {
-    await navigator.clipboard.writeText(link);
+    const saved = await saveQuote();
+    const link = getPreviewUrl(saved);
+    await copyToClipboard(link);
+    previewLinkOutput.value = link;
+    previewLinkOutput.textContent = link;
     label.textContent = "Link copiado";
     setTimeout(() => {
       label.textContent = "Copiar link";
     }, 1600);
+  } catch (error) {
+    label.textContent = "Copiar link";
+    alert(error.message);
+  }
+});
+
+document.querySelector("#copyMbway").addEventListener("click", async () => {
+  const label = document.querySelector("#copyMbway .button-label");
+
+  try {
+    await copyToClipboard(mbwayNumber);
+    label.textContent = "Número copiado";
+    setTimeout(() => {
+      label.textContent = "Copiar número";
+    }, 1600);
   } catch {
-    previewLinkOutput.focus?.();
+    alert("Não foi possível copiar o número MB WAY.");
   }
 });
 
@@ -271,15 +496,20 @@ document.querySelectorAll(".mobile-mode-switch button").forEach((button) => {
   });
 });
 
-const urlParams = new URLSearchParams(window.location.search);
-const quoteFromUrl = decodeQuoteState(urlParams.get("q"));
-if (quoteFromUrl) {
-  applyQuoteState(quoteFromUrl);
+async function init() {
   if (window.location.pathname.includes("/orcamento/")) {
     document.body.classList.add("public-preview");
     document.body.dataset.view = "preview";
-    document.title = `Orçamento | ${quoteFromUrl.clientName || "Cliente"}`;
+
+    const slug = decodeURIComponent(window.location.pathname.split("/").filter(Boolean).pop() || "");
+    const quote = await loadQuoteFromDatabase(slug);
+    if (quote) {
+      applyQuoteState(quote);
+      document.title = `Orçamento | ${quote.clientName || "Cliente"}`;
+    }
   }
+
+  updateProposal();
 }
 
-updateProposal();
+init();

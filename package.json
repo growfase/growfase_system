@@ -1,0 +1,22 @@
+{
+  "name": "growfase-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Growfase quote generator and public proposal preview.",
+  "scripts": {
+    "start": "node server.js",
+    "build:cloudflare": "node scripts/build-cloudflare.js",
+    "deploy:cloudflare": "npm run build:cloudflare && wrangler deploy",
+    "lint": "node --check app.js && node --check server.js && node --check src/worker.js && node --check scripts/build-cloudflare.js && node --check tests/smoke.test.js && node --check tests/supabase.integration.js && node --check tests/server.integration.js",
+    "typecheck": "node --check app.js && node --check server.js && node --check src/worker.js && node --check scripts/build-cloudflare.js && node --check tests/smoke.test.js && node --check tests/supabase.integration.js && node --check tests/server.integration.js",
+    "test": "node tests/smoke.test.js",
+    "test:supabase": "node tests/supabase.integration.js",
+    "test:server": "node tests/server.integration.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "wrangler": "^4.111.0"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "growfase-system",
+  "account_id": "ae4f64f23a778ec824928896517a0cff",
+  "main": "./src/worker.js",
+  "compatibility_date": "2026-07-16",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/orcamento/*", "/admin/*"]
+  },
+  "routes": [
+    {
+      "pattern": "www.growfase.com/*",
+      "custom_domain": true
+    }
+  ],
+  "vars": {
+    "SUPABASE_URL": "https://ybmanywfxflskwbutspe.supabase.co"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
