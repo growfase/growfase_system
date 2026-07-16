@@ -132,13 +132,6 @@ async function handleApi(request, env, url) {
   return json({ error: "API route not found." }, 404);
 }
 
-function assetRequestForIndex(request) {
-  const url = new URL(request.url);
-  url.pathname = "/index.html";
-  url.search = "";
-  return new Request(url, request);
-}
-
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -154,7 +147,7 @@ export default {
         url.pathname === "/admin/gerador_de_proposta" ||
         url.pathname.startsWith("/orcamento/")
       ) {
-        return env.ASSETS.fetch(assetRequestForIndex(request));
+        return env.ASSETS.fetch(request);
       }
 
       return env.ASSETS.fetch(request);

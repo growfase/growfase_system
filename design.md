@@ -182,3 +182,4 @@ Ao receber uma alteração de design:
 | 2026-07-16 | Adicionada galeria selecionável de Cartões de visita na área de trabalhos, usando os assets reais adicionados em `assets/figma/works/Cartão de visitas/`. |
 | 2026-07-16 | Corrigida a galeria de Cartões de visita para apresentar os assets em proporção quadrada 1:1. |
 | 2026-07-16 | Renomeada a ação de copiar para `Gerar link` e fixado o formato canónico `https://www.growfase.com/orcamento/[cliente]`, guardando no Supabase antes de expor o link. |
+| 2026-07-16 | Corrigida a rota pública `/orcamento/[cliente]` para manter o path original, abrir apenas a proposta e nunca mostrar o gerador ao cliente. |

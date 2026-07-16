@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="/styles.css?v=design-system-37" />
   </head>
   <body>
+    <script>
+      if (window.location.pathname.includes("/orcamento/")) {
+        document.body.classList.add("public-preview");
+        document.body.dataset.view = "preview";
+      }
+    </script>
     <main class="workspace">
       <div class="mobile-mode-switch" aria-label="Alternar visualização">
         <button type="button" class="is-active" data-view="editor">

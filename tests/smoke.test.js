@@ -6,10 +6,13 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const appJs = fs.readFileSync(path.join(root, "app.js"), "utf8");
 const indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
+const workerJs = fs.readFileSync(path.join(root, "src", "worker.js"), "utf8");
 
 assert.match(appJs, /https:\/\/www\.growfase\.com\/orcamento/);
 assert.match(indexHtml, /https:\/\/www\.growfase\.com\/orcamento\/luan-campos/);
 assert.match(indexHtml, />Gerar link</);
+assert.match(indexHtml, /document\.body\.classList\.add\("public-preview"\)/);
+assert.doesNotMatch(workerJs, /pathname = "\/index\.html"/);
 assert.doesNotMatch(appJs, /https:\/\/growfase\.com\/orcamento/);
 assert.doesNotMatch(indexHtml, /https:\/\/growfase\.com\/orcamento/);
 
