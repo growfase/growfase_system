@@ -1,5 +1,16 @@
 const assert = require("assert");
 const { spawn } = require("child_process");
+const fs = require("fs");
+const path = require("path");
+
+const root = path.resolve(__dirname, "..");
+const appJs = fs.readFileSync(path.join(root, "app.js"), "utf8");
+const indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
+
+assert.match(appJs, /https:\/\/www\.growfase\.com\/orcamento/);
+assert.match(indexHtml, /https:\/\/www\.growfase\.com\/orcamento\/luan-campos/);
+assert.doesNotMatch(appJs, /https:\/\/growfase\.com\/orcamento/);
+assert.doesNotMatch(indexHtml, /https:\/\/growfase\.com\/orcamento/);
 
 const port = String(5300 + Math.floor(Math.random() * 500));
 const child = spawn(process.execPath, ["server.js"], {

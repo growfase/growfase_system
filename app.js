@@ -2,6 +2,7 @@ const form = document.querySelector("#quoteForm");
 const finishSelect = form.elements.finish;
 const previewLinkOutput = document.querySelector("#previewLink");
 const mbwayNumber = "+351 931 948 650";
+const publicPreviewBase = "https://www.growfase.com/orcamento";
 
 if (window.lucide) {
   window.lucide.createIcons();
@@ -225,7 +226,7 @@ function getFormState() {
     finish: data.get("finish") || "premium",
     notes: data.get("notes") || "",
     deadlineText: data.get("deadlineText") || "7 a 15 dias úteis",
-    previewBase: "https://growfase.com/orcamento",
+    previewBase: publicPreviewBase,
     currency: "EUR",
     total: Number(quote.total.toFixed(2)),
     pricing: getPricingState(data),
@@ -245,7 +246,7 @@ function applyQuoteState(state) {
   form.elements.finish.value = state.finish || "premium";
   form.elements.notes.value = state.notes || "";
   form.elements.deadlineText.value = state.deadlineText || "7 a 15 dias úteis";
-  form.elements.previewBase.value = "https://growfase.com/orcamento";
+  form.elements.previewBase.value = publicPreviewBase;
 
   Object.entries(state.pricing || {}).forEach(([key, value]) => {
     if (form.elements[key]) form.elements[key].value = value;
@@ -265,12 +266,8 @@ function applyQuoteState(state) {
 }
 
 function getPreviewUrl(state, baseOverride) {
-  const base = (baseOverride || state.previewBase || "https://growfase.com/orcamento").replace(/\/+$/, "");
+  const base = (baseOverride || state.previewBase || publicPreviewBase).replace(/\/+$/, "");
   return `${base}/${state.slug || slugify(state.clientName)}`;
-}
-
-function getLocalPreviewUrl(state) {
-  return `${window.location.origin}/orcamento/${state.slug || slugify(state.clientName)}`;
 }
 
 function renderIncludedList(services, finishLabel) {
@@ -441,7 +438,10 @@ document.querySelector("#openPreview").addEventListener("click", async () => {
   label.textContent = "A guardar";
   try {
     const saved = await saveQuote();
-    window.open(getLocalPreviewUrl(saved), "_blank");
+    const link = getPreviewUrl(saved);
+    previewLinkOutput.value = link;
+    previewLinkOutput.textContent = link;
+    window.open(link, "_blank");
   } catch (error) {
     alert(error.message);
   } finally {
