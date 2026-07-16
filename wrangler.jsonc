@@ -13,7 +13,7 @@
   "routes": [
     {
       "pattern": "www.growfase.com/*",
-      "custom_domain": true
+      "zone_name": "growfase.com"
     }
   ],
   "vars": {
