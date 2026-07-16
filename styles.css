@@ -1133,13 +1133,14 @@ textarea:focus {
   border-radius: 7px;
   color: #f8f8f8;
   background:
-    radial-gradient(circle at 92% 44%, rgba(69, 143, 180, 0.62), transparent 34%),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03)),
-    rgba(40, 45, 48, 0.78);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.38), inset 0 0 24px rgba(73, 154, 194, 0.12);
+    radial-gradient(circle at 88% 45%, rgba(39, 104, 139, 0.54), transparent 36%),
+    linear-gradient(90deg, rgba(4, 12, 17, 0.84), rgba(8, 32, 45, 0.8)),
+    rgba(3, 13, 19, 0.88);
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.42), inset 0 0 24px rgba(73, 154, 194, 0.1);
   font-family: var(--font-display);
+  text-align: right;
 }
 
 .deadline strong {
@@ -1161,7 +1162,7 @@ textarea:focus {
   max-width: 118px;
   font-size: 13px;
   line-height: 1.18;
-  text-align: center;
+  text-align: right;
 }
 
 .deadline #deadlineMain {
@@ -1180,7 +1181,7 @@ textarea:focus {
 
 .interest {
   min-height: 390px;
-  padding: 54px 23px 74px;
+  padding: 54px 23px 42px;
   background: #f3f3f0;
 }
 
@@ -1271,7 +1272,7 @@ textarea:focus {
 }
 
 .budget-section {
-  padding: 82px 16px 24px;
+  padding: 54px 16px 24px;
   color: #101010;
   background: #f3f3f0;
 }
