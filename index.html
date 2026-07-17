@@ -7,15 +7,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;600;700&family=Orbitron:wght@400;500;700;900&family=Oxanium:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/styles.css?v=design-system-37" />
+    <link rel="stylesheet" href="/styles.css?v=design-system-38" />
   </head>
   <body>
     <script>
       if (window.location.pathname.includes("/orcamento/")) {
-        document.body.classList.add("public-preview");
+        document.body.classList.add("public-preview", "public-loading");
         document.body.dataset.view = "preview";
       }
     </script>
+    <div class="public-loader" role="status" aria-live="polite" aria-label="A carregar proposta">
+      <img src="/assets/figma/logo.png" alt="" />
+      <span>A preparar proposta</span>
+    </div>
     <main class="workspace">
       <div class="mobile-mode-switch" aria-label="Alternar visualização">
         <button type="button" class="is-active" data-view="editor">

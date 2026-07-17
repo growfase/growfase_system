@@ -496,9 +496,24 @@ document.querySelectorAll(".mobile-mode-switch button").forEach((button) => {
   });
 });
 
+const wait = (ms) => new Promise((resolve) => {
+  setTimeout(resolve, ms);
+});
+
+async function finishPublicLoader(startedAt) {
+  const elapsed = Date.now() - startedAt;
+  await wait(Math.max(0, 3000 - elapsed));
+  document.body.classList.remove("public-loading");
+  document.body.classList.add("public-loaded");
+}
+
 async function init() {
+  const publicLoadStartedAt = Date.now();
+  let isPublicQuote = false;
+
   if (window.location.pathname.includes("/orcamento/")) {
-    document.body.classList.add("public-preview");
+    isPublicQuote = true;
+    document.body.classList.add("public-preview", "public-loading");
     document.body.dataset.view = "preview";
 
     const slug = decodeURIComponent(window.location.pathname.split("/").filter(Boolean).pop() || "");
@@ -510,6 +525,10 @@ async function init() {
   }
 
   updateProposal();
+
+  if (isPublicQuote) {
+    await finishPublicLoader(publicLoadStartedAt);
+  }
 }
 
 init();

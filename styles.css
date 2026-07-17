@@ -1682,6 +1682,58 @@ body.public-preview {
   background: #050505;
 }
 
+.public-loader {
+  display: none;
+}
+
+body.public-preview .public-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  gap: 18px;
+  padding: 28px;
+  color: #f7f7f7;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(142, 220, 255, 0.16), transparent 27%),
+    radial-gradient(circle at 50% 52%, rgba(62, 156, 214, 0.1), transparent 42%),
+    #050505;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+body.public-preview .public-loader img {
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  border-radius: 22px;
+  box-shadow: 0 0 44px rgba(142, 220, 255, 0.22);
+}
+
+body.public-preview .public-loader span {
+  align-self: start;
+  margin-top: -8px;
+  color: rgba(247, 247, 247, 0.82);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+body.public-preview.public-loading {
+  overflow: hidden;
+}
+
+body.public-preview.public-loading .public-loader {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.public-preview.public-loading .workspace {
+  visibility: hidden;
+}
+
 body.public-preview .workspace {
   display: block;
   padding: 0;
@@ -1701,6 +1753,12 @@ body.public-preview .proposal {
   min-height: 100vh;
   border: 0;
   box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.public-preview .public-loader {
+    transition: none;
+  }
 }
 
 @media print {
