@@ -1691,8 +1691,9 @@ body.public-preview .public-loader {
   inset: 0;
   z-index: 50;
   display: grid;
-  place-items: center;
-  gap: 18px;
+  align-content: center;
+  justify-items: center;
+  gap: 16px;
   padding: 28px;
   color: #f7f7f7;
   background:
@@ -1712,13 +1713,35 @@ body.public-preview .public-loader img {
   box-shadow: 0 0 44px rgba(142, 220, 255, 0.22);
 }
 
-body.public-preview .public-loader span {
-  align-self: start;
-  margin-top: -8px;
+body.public-preview .public-loader > span {
   color: rgba(247, 247, 247, 0.82);
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 500;
+}
+
+body.public-preview .public-loader__bar {
+  width: min(168px, 52vw);
+  height: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(142, 220, 255, 0.38);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 18px rgba(142, 220, 255, 0.12);
+}
+
+body.public-preview .public-loader__bar span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #55b3ff, #bff1ff);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+body.public-preview.public-loading .public-loader__bar span {
+  animation: public-loader-progress 3s linear forwards;
 }
 
 body.public-preview.public-loading {
@@ -1758,6 +1781,17 @@ body.public-preview .proposal {
 @media (prefers-reduced-motion: reduce) {
   body.public-preview .public-loader {
     transition: none;
+  }
+
+  body.public-preview.public-loading .public-loader__bar span {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes public-loader-progress {
+  to {
+    transform: scaleX(1);
   }
 }
 

@@ -13,6 +13,7 @@ assert.match(indexHtml, /https:\/\/www\.growfase\.com\/orcamento\/luan-campos/);
 assert.match(indexHtml, />Gerar link</);
 assert.match(indexHtml, /document\.body\.classList\.add\("public-preview", "public-loading"\)/);
 assert.match(indexHtml, /class="public-loader"/);
+assert.match(indexHtml, /class="public-loader__bar"/);
 assert.doesNotMatch(workerJs, /pathname = "\/index\.html"/);
 assert.doesNotMatch(appJs, /https:\/\/growfase\.com\/orcamento/);
 assert.doesNotMatch(indexHtml, /https:\/\/growfase\.com\/orcamento/);

@@ -191,6 +191,41 @@ function setDeadline(value) {
   setText("#deadlineSuffix", suffixMatch ? suffixMatch[1] : "");
 }
 
+function repairLegacyText(value) {
+  if (typeof value !== "string") return value;
+
+  return value
+    .replace(/Cart�o/g, "Cartão")
+    .replace(/cart�o/g, "cartão")
+    .replace(/Or�amento/g, "Orçamento")
+    .replace(/or�amento/g, "orçamento")
+    .replace(/Impress�o/g, "Impressão")
+    .replace(/impress�o/g, "impressão")
+    .replace(/produ��o/g, "produção")
+    .replace(/Produ��o/g, "Produção")
+    .replace(/gr�fica/g, "gráfica")
+    .replace(/Gr�fica/g, "Gráfica")
+    .replace(/aprova��o/g, "aprovação")
+    .replace(/aprova��es/g, "aprovações")
+    .replace(/confirma��o/g, "confirmação")
+    .replace(/ap�s/g, "após")
+    .replace(/m�nimo/g, "mínimo")
+    .replace(/n�mero/g, "número")
+    .replace(/�teis/g, "úteis")
+    .replace(/� parte/g, "à parte")
+    .replace(/Pr�via/g, "Prévia")
+    .replace(/pr�via/g, "prévia");
+}
+
+function repairLegacyState(value) {
+  if (Array.isArray(value)) return value.map(repairLegacyState);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, repairLegacyState(entry)]));
+  }
+
+  return repairLegacyText(value);
+}
+
 function slugify(value) {
   return (value || "cliente")
     .normalize("NFD")
@@ -237,31 +272,32 @@ function getFormState() {
 
 function applyQuoteState(state) {
   if (!state) return;
-  form.elements.clientName.value = state.clientName || "Cliente";
-  form.elements.companyName.value = state.companyName || "Growfase";
-  form.elements.proposalTitle.value = state.proposalTitle || "Proposta\nIdentidade\nvisual e\nRedes\nSociais";
-  form.elements.requestedService.value = state.requestedService || "businessCard";
-  form.elements.faqType.value = state.faqType || "designGeneral";
-  form.elements.quantity.value = state.quantity || "500";
-  form.elements.finish.value = state.finish || "premium";
-  form.elements.notes.value = state.notes || "";
-  form.elements.deadlineText.value = state.deadlineText || "7 a 15 dias úteis";
+  const quoteState = repairLegacyState(state);
+  form.elements.clientName.value = quoteState.clientName || "Cliente";
+  form.elements.companyName.value = quoteState.companyName || "Growfase";
+  form.elements.proposalTitle.value = quoteState.proposalTitle || "Proposta\nIdentidade\nvisual e\nRedes\nSociais";
+  form.elements.requestedService.value = quoteState.requestedService || "businessCard";
+  form.elements.faqType.value = quoteState.faqType || "designGeneral";
+  form.elements.quantity.value = quoteState.quantity || "500";
+  form.elements.finish.value = quoteState.finish || "premium";
+  form.elements.notes.value = quoteState.notes || "";
+  form.elements.deadlineText.value = quoteState.deadlineText || "7 a 15 dias úteis";
   form.elements.previewBase.value = publicPreviewBase;
 
-  Object.entries(state.pricing || {}).forEach(([key, value]) => {
+  Object.entries(quoteState.pricing || {}).forEach(([key, value]) => {
     if (form.elements[key]) form.elements[key].value = value;
   });
 
-  if (state.pricing?.quoteValue == null && state.total != null) {
-    form.elements.quoteValue.value = state.total;
+  if (quoteState.pricing?.quoteValue == null && quoteState.total != null) {
+    form.elements.quoteValue.value = quoteState.total;
   }
 
   Object.keys(serviceTemplate).forEach((key) => {
-    form.elements[key].checked = (state.services || []).includes(key);
+    form.elements[key].checked = (quoteState.services || []).includes(key);
   });
 
   portfolioKeys.forEach((key) => {
-    if (form.elements[key]) form.elements[key].checked = state.portfolio?.[key] !== false;
+    if (form.elements[key]) form.elements[key].checked = quoteState.portfolio?.[key] !== false;
   });
 }
 

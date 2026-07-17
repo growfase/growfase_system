@@ -109,7 +109,7 @@ O azul deve aparecer com intenção e não dominar toda a interface. Estados de 
 - Transições entre 150ms e 250ms para cor, borda e opacidade.
 - Não usar animações que desloquem o layout.
 - Respeitar `prefers-reduced-motion` quando forem adicionadas animações complexas.
-- A página pública `/orcamento/[cliente]` deve apresentar um loader de 3 segundos com o logo real da Growfase sobre fundo preto e brilho azul subtil antes de revelar a proposta. O loader não deve aparecer no gerador/admin.
+- A página pública `/orcamento/[cliente]` deve apresentar um loader de 3 segundos com o logo real da Growfase sobre fundo preto, brilho azul subtil e barra de progresso horizontal antes de revelar a proposta. O loader não deve aparecer no gerador/admin.
 - Áreas clicáveis devem ter pelo menos 38px de altura no alternador e 42px nas ações do editor.
 - A seleção de pacote e extras deve ter diferença de contraste além da cor isolada.
 
@@ -186,3 +186,4 @@ Ao receber uma alteração de design:
 | 2026-07-16 | Corrigida a rota pública `/orcamento/[cliente]` para manter o path original, abrir apenas a proposta e nunca mostrar o gerador ao cliente. |
 | 2026-07-16 | Atualizado o botão WhatsApp para `wa.me/351931948650`, escurecido o card de prazo com blur de 40px e reduzido o espaço antes do investimento. |
 | 2026-07-16 | Adicionado loader público de 3 segundos com logo Growfase para links `/orcamento/[cliente]`. |
+| 2026-07-17 | Adicionada barra de progresso ao loader público e limpeza automática de textos antigos com acentos corrompidos. |
